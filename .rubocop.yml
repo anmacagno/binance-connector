@@ -13,5 +13,8 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
 
+RSpec/ExampleLength:
+  Max: 6
+
 Style/Documentation:
   Enabled: false

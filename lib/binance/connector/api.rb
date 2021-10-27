@@ -5,8 +5,32 @@ module Binance
     module Api
       BASE_URL = 'https://api.binance.com'
 
+      def self.api_key
+        ENV.fetch('BINANCE_API_KEY')
+      end
+
+      def self.secret_key
+        ENV.fetch('BINANCE_SECRET_KEY')
+      end
+
       def self.url(path)
         BASE_URL + path
+      end
+
+      def self.options(params, security_type = :none)
+        case security_type
+        when :none
+          { query: params }
+        when :trade, :margin, :user_data
+          { query: params.merge(signature: sign_params(params)), headers: { 'X-MBX-APIKEY': api_key } }
+        when :user_stream, :market_data
+          { query: params, headers: { 'X-MBX-APIKEY': api_key } }
+        end
+      end
+
+      def self.sign_params(params)
+        data = params.map { |key, value| "#{key}=#{value}" }.join('&')
+        OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('SHA256'), secret_key, data)
       end
 
       def self.ping
@@ -18,13 +42,13 @@ module Binance
       end
 
       def self.exchange_info(symbols)
-        options = { query: { symbols: symbols.to_s.gsub(' ', '') } }
-        HttpClient.get(url('/api/v3/exchangeInfo'), options)
+        params = { symbols: symbols.to_s.gsub(' ', '') }
+        HttpClient.get(url('/api/v3/exchangeInfo'), options(params))
       end
 
       def self.avg_price(symbol)
-        options = { query: { symbol: symbol } }
-        HttpClient.get(url('/api/v3/avgPrice'), options)
+        params = { symbol: symbol }
+        HttpClient.get(url('/api/v3/avgPrice'), options(params))
       end
     end
   end
