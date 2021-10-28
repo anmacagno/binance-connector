@@ -36,24 +36,6 @@ module Binance
       def self.timestamp
         Time.now.utc.strftime('%s%3N')
       end
-
-      def self.ping
-        HttpClient.get(url('/api/v3/ping'))
-      end
-
-      def self.time
-        HttpClient.get(url('/api/v3/time'))
-      end
-
-      def self.exchange_info(symbols)
-        params = { symbols: symbols.to_s.gsub(' ', '') }
-        HttpClient.get(url('/api/v3/exchangeInfo'), options(params))
-      end
-
-      def self.avg_price(symbol)
-        params = { symbol: symbol }
-        HttpClient.get(url('/api/v3/avgPrice'), options(params))
-      end
     end
   end
 end
