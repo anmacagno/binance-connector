@@ -33,29 +33,29 @@ RSpec.describe Binance::Connector::Api do
       end
     end
 
-    context 'when security type is user_data' do
-      let(:security_type) { :user_data }
-
-      it 'succeeds' do
-        expect(described_class.options(params, security_type)).to eq(
-          {
-            query: params.merge(signature: '18f82ab1c4ba20d60cb86ebc4cab5b54ddb974cdf7832421345148e7a7f9466e'),
-            headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
-          }
-        )
+    %i[trade margin user_data].each do |security_type|
+      context "when security type is #{security_type}" do
+        it 'succeeds' do
+          expect(described_class.options(params, security_type)).to eq(
+            {
+              query: params.merge(signature: '18f82ab1c4ba20d60cb86ebc4cab5b54ddb974cdf7832421345148e7a7f9466e'),
+              headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
+            }
+          )
+        end
       end
     end
 
-    context 'when security type is user_stream' do
-      let(:security_type) { :user_stream }
-
-      it 'succeeds' do
-        expect(described_class.options(params, security_type)).to eq(
-          {
-            query: params,
-            headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
-          }
-        )
+    %i[user_stream market_data].each do |security_type|
+      context "when security type is #{security_type}" do
+        it 'succeeds' do
+          expect(described_class.options(params, security_type)).to eq(
+            {
+              query: params,
+              headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
+            }
+          )
+        end
       end
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe Binance::Connector::Api do
       )
     end
 
-    let(:params) { { recvWindow: 5000, timestamp: '1635283424006'.to_i } }
+    let(:params) { { recvWindow: 5000, timestamp: '1635283424006' } }
 
     it 'succeeds' do
       expect(described_class.sign_params(params)).to eq(
