@@ -33,6 +33,10 @@ module Binance
         OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('SHA256'), secret_key, data)
       end
 
+      def self.timestamp
+        Time.now.utc.strftime('%s%3N')
+      end
+
       def self.ping
         HttpClient.get(url('/api/v3/ping'))
       end

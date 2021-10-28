@@ -76,6 +76,16 @@ RSpec.describe Binance::Connector::Api do
     end
   end
 
+  describe '.timestamp' do
+    before do
+      allow(Time).to receive(:now).and_return(Time.new('2021-10-27'))
+    end
+
+    it 'succeeds' do
+      expect(described_class.timestamp).to eq('1609480800000')
+    end
+  end
+
   describe '.ping' do
     let(:json) { JSON.parse(File.read('spec/fixtures/ping.json'), symbolize_names: true) }
 
