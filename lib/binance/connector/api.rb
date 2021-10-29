@@ -22,15 +22,18 @@ module Binance
         when :none
           { query: params }
         when :trade, :margin, :user_data
-          { query: params.merge(signature: sign_params(params)), headers: { 'X-MBX-APIKEY': api_key } }
+          { query: sign_params(params), headers: { 'X-MBX-APIKEY': api_key } }
         when :user_stream, :market_data
           { query: params, headers: { 'X-MBX-APIKEY': api_key } }
         end
       end
 
       def self.sign_params(params)
-        data = params.map { |key, value| "#{key}=#{value}" }.join('&')
-        OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('SHA256'), secret_key, data)
+        signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp })
+        signature = OpenSSL::HMAC.hexdigest(
+          OpenSSL::Digest.new('SHA256'), secret_key, URI.encode_www_form(signed_params)
+        )
+        signed_params.merge({ signature: signature })
       end
 
       def self.timestamp

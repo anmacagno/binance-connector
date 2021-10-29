@@ -5,8 +5,41 @@ module Binance
     module Api
       module Account
         def self.account
-          params = { recvWindow: 5000, timestamp: Api.timestamp }
+          params = {}
           HttpClient.get(Api.url('/api/v3/account'), Api.options(params, :user_data))
+        end
+
+        def self.new_order_test(symbol, side, type, quote_quantity)
+          params = {
+            symbol: symbol,
+            side: side,
+            type: type,
+            quoteOrderQty: quote_quantity
+          }
+          HttpClient.post(Api.url('/api/v3/order/test'), Api.options(params, :trade))
+        end
+
+        def self.cancel_order(symbol, order_id)
+          params = {
+            symbol: symbol,
+            origClientOrderId: order_id
+          }
+          HttpClient.delete(Api.url('/api/v3/order'), Api.options(params, :trade))
+        end
+
+        def self.query_order(symbol, order_id)
+          params = {
+            symbol: symbol,
+            origClientOrderId: order_id
+          }
+          HttpClient.get(Api.url('/api/v3/order'), Api.options(params, :user_data))
+        end
+
+        def self.all_orders(symbol)
+          params = {
+            symbol: symbol
+          }
+          HttpClient.get(Api.url('/api/v3/allOrders'), Api.options(params, :user_data))
         end
       end
     end

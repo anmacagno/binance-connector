@@ -11,6 +11,9 @@ RSpec.describe Binance::Connector::Api do
 
   describe '.options' do
     before do
+      allow(Time).to receive(:now).and_return(
+        Time.new('2021-10-27')
+      )
       allow(ENV).to receive(:fetch).with('BINANCE_API_KEY').and_return(
         'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A'
       )
@@ -38,7 +41,13 @@ RSpec.describe Binance::Connector::Api do
         it 'succeeds' do
           expect(described_class.options(params, security_type)).to eq(
             {
-              query: params.merge(signature: '18f82ab1c4ba20d60cb86ebc4cab5b54ddb974cdf7832421345148e7a7f9466e'),
+              query: params.merge(
+                {
+                  recvWindow: 5000,
+                  timestamp: '1609480800000',
+                  signature: '3e268b62518e5a3f5df0e6ca39cc0e0f1d9bc664f4c0048cdd4e72df258267f9'
+                }
+              ),
               headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
             }
           )
@@ -62,23 +71,34 @@ RSpec.describe Binance::Connector::Api do
 
   describe '.sign_params' do
     before do
+      allow(Time).to receive(:now).and_return(
+        Time.new('2021-10-27')
+      )
       allow(ENV).to receive(:fetch).with('BINANCE_SECRET_KEY').and_return(
         'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
       )
     end
 
-    let(:params) { { recvWindow: 5000, timestamp: '1635283424006' } }
+    let(:params) { {} }
 
     it 'succeeds' do
       expect(described_class.sign_params(params)).to eq(
-        '970b70cab6eaf08cd54d819ab45eeed3833d6a977ec255a969fa1b9ecc269396'
+        params.merge(
+          {
+            recvWindow: 5000,
+            timestamp: '1609480800000',
+            signature: '3e268b62518e5a3f5df0e6ca39cc0e0f1d9bc664f4c0048cdd4e72df258267f9'
+          }
+        )
       )
     end
   end
 
   describe '.timestamp' do
     before do
-      allow(Time).to receive(:now).and_return(Time.new('2021-10-27'))
+      allow(Time).to receive(:now).and_return(
+        Time.new('2021-10-27')
+      )
     end
 
     it 'succeeds' do

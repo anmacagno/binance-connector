@@ -14,7 +14,7 @@ Metrics/BlockLength:
     - spec/**/*.rb
 
 RSpec/ExampleLength:
-  Max: 6
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
