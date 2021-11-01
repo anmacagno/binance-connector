@@ -1,0 +1,15 @@
+{
+  "symbol": "AVAXUSDT",
+  "origClientOrderId": "cZ1tag94OEK72dijT6vYEk",
+  "orderId": 794968499,
+  "orderListId": -1,
+  "clientOrderId": "dcmskQuNuhWNM47itBmAV3",
+  "price": "60.00000000",
+  "origQty": "1.00000000",
+  "executedQty": "0.00000000",
+  "cummulativeQuoteQty": "0.00000000",
+  "status": "CANCELED",
+  "timeInForce": "GTC",
+  "type": "LIMIT",
+  "side": "BUY"
+}
