@@ -25,8 +25,8 @@ RSpec.describe Binance::Connector::Api::Account do
       allow(Binance::Connector::HttpClient).to receive(:post).and_return(json)
     end
 
-    it 'succeeds' do
-      expect(described_class.new_order_test('ETHUSDT', 'BUY', 'MARKET', 10)).to eq(
+    it 'creates a buy market order' do
+      expect(described_class.new_order_test('ETHUSDT', 'BUY', 'MARKET', nil, nil, 10, nil)).to eq(
         {}
       )
     end
@@ -39,8 +39,8 @@ RSpec.describe Binance::Connector::Api::Account do
       allow(Binance::Connector::HttpClient).to receive(:post).and_return(json)
     end
 
-    it 'succeeds' do
-      expect(described_class.new_order('ETHUSDT', 'BUY', 'MARKET', 10).keys).to match_array(
+    it 'creates a buy limit order' do
+      expect(described_class.new_order('AVAXUSDT', 'BUY', 'LIMIT', 'GTC', 1, nil, 60).keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId transactTime price origQty
           executedQty cummulativeQuoteQty status timeInForce type side fills

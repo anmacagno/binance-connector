@@ -29,7 +29,7 @@ module Binance
       end
 
       def self.sign_params(params)
-        signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp })
+        signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp }).compact
         signature = OpenSSL::HMAC.hexdigest(
           OpenSSL::Digest.new('SHA256'), secret_key, URI.encode_www_form(signed_params)
         )

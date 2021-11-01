@@ -9,22 +9,28 @@ module Binance
           HttpClient.get(Api.url('/api/v3/account'), Api.options(params, :user_data))
         end
 
-        def self.new_order_test(symbol, side, type, quote_quantity)
+        def self.new_order_test(symbol, side, type, time_in_force, quantity, quote_quantity, price)
           params = {
             symbol: symbol,
             side: side,
             type: type,
-            quoteOrderQty: quote_quantity
+            timeInForce: time_in_force,
+            quantity: quantity,
+            quoteOrderQty: quote_quantity,
+            price: price
           }
           HttpClient.post(Api.url('/api/v3/order/test'), Api.options(params, :trade))
         end
 
-        def self.new_order(symbol, side, type, quote_quantity)
+        def self.new_order(symbol, side, type, time_in_force, quantity, quote_quantity, price)
           params = {
             symbol: symbol,
             side: side,
             type: type,
-            quoteOrderQty: quote_quantity
+            timeInForce: time_in_force,
+            quantity: quantity,
+            quoteOrderQty: quote_quantity,
+            price: price
           }
           HttpClient.post(Api.url('/api/v3/order'), Api.options(params, :trade))
         end
