@@ -45,6 +45,20 @@ RSpec.describe Binance::Connector::Api::Market do
     end
   end
 
+  describe '.klines' do
+    before do
+      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+    end
+
+    context 'when the symbol is valid' do
+      let(:json) { JSON.parse(File.read('spec/fixtures/market/klines.json'), symbolize_names: true) }
+
+      it 'succeeds' do
+        expect(described_class.klines('ETHUSDT', '1d', nil, nil, '7').size).to eq(7)
+      end
+    end
+  end
+
   describe '.avg_price' do
     before do
       allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
@@ -56,6 +70,22 @@ RSpec.describe Binance::Connector::Api::Market do
       it 'succeeds' do
         expect(described_class.avg_price('ETHUSDT').keys).to match_array(
           %i[mins price]
+        )
+      end
+    end
+  end
+
+  describe '.ticker_price' do
+    before do
+      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+    end
+
+    context 'when the symbol is valid' do
+      let(:json) { JSON.parse(File.read('spec/fixtures/market/ticker_price.json'), symbolize_names: true) }
+
+      it 'succeeds' do
+        expect(described_class.ticker_price('ETHUSDT').keys).to match_array(
+          %i[symbol price]
         )
       end
     end

@@ -18,6 +18,7 @@ module Binance
       end
 
       def self.options(params, security_type = :none)
+        params.compact!
         case security_type
         when :none
           { query: params }
@@ -29,7 +30,7 @@ module Binance
       end
 
       def self.sign_params(params)
-        signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp }).compact
+        signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp })
         signature = OpenSSL::HMAC.hexdigest(
           OpenSSL::Digest.new('SHA256'), secret_key, URI.encode_www_form(signed_params)
         )

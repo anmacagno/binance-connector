@@ -13,13 +13,35 @@ module Binance
         end
 
         def self.exchange_info(symbols)
-          params = { symbols: symbols.to_s.gsub(' ', '') }
+          params = {
+            symbols: symbols.to_s.gsub(' ', '')
+          }
           HttpClient.get(Api.url('/api/v3/exchangeInfo'), Api.options(params))
         end
 
+        def self.klines(symbol, interval, start_time, end_time, limit)
+          params = {
+            symbol: symbol,
+            interval: interval,
+            startTime: start_time,
+            endTime: end_time,
+            limit: limit
+          }
+          HttpClient.get(Api.url('/api/v3/klines'), Api.options(params))
+        end
+
         def self.avg_price(symbol)
-          params = { symbol: symbol }
+          params = {
+            symbol: symbol
+          }
           HttpClient.get(Api.url('/api/v3/avgPrice'), Api.options(params))
+        end
+
+        def self.ticker_price(symbol)
+          params = {
+            symbol: symbol
+          }
+          HttpClient.get(Api.url('/api/v3/ticker/price'), Api.options(params))
         end
       end
     end
