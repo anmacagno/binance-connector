@@ -12,7 +12,7 @@ RSpec.describe Binance::Connector::Api do
   describe '.options' do
     before do
       allow(Time).to receive(:now).and_return(
-        Time.new('2021-10-27')
+        Time.utc(2021, 10, 27)
       )
       allow(ENV).to receive(:fetch).with('BINANCE_API_KEY').and_return(
         'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A'
@@ -44,8 +44,8 @@ RSpec.describe Binance::Connector::Api do
               query: params.merge(
                 {
                   recvWindow: 5000,
-                  timestamp: '1609480800000',
-                  signature: '3e268b62518e5a3f5df0e6ca39cc0e0f1d9bc664f4c0048cdd4e72df258267f9'
+                  timestamp: '1635292800000',
+                  signature: 'acd753e01ad684b379ad67dd5e395402067e94b17143e30a86c77f2dfe53dff1'
                 }
               ),
               headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
@@ -72,7 +72,7 @@ RSpec.describe Binance::Connector::Api do
   describe '.sign_params' do
     before do
       allow(Time).to receive(:now).and_return(
-        Time.new('2021-10-27')
+        Time.utc(2021, 10, 27)
       )
       allow(ENV).to receive(:fetch).with('BINANCE_SECRET_KEY').and_return(
         'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
@@ -86,8 +86,8 @@ RSpec.describe Binance::Connector::Api do
         params.merge(
           {
             recvWindow: 5000,
-            timestamp: '1609480800000',
-            signature: '3e268b62518e5a3f5df0e6ca39cc0e0f1d9bc664f4c0048cdd4e72df258267f9'
+            timestamp: '1635292800000',
+            signature: 'acd753e01ad684b379ad67dd5e395402067e94b17143e30a86c77f2dfe53dff1'
           }
         )
       )
@@ -97,12 +97,12 @@ RSpec.describe Binance::Connector::Api do
   describe '.timestamp' do
     before do
       allow(Time).to receive(:now).and_return(
-        Time.new('2021-10-27')
+        Time.utc(2021, 10, 27)
       )
     end
 
     it 'succeeds' do
-      expect(described_class.timestamp).to eq('1609480800000')
+      expect(described_class.timestamp).to eq('1635292800000')
     end
   end
 end
