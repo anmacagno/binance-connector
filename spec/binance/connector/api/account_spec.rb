@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Binance::Connector::Api::Account do
-  describe '.account' do
-    let(:json) { File.read('spec/fixtures/account/account.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
-
-    it 'succeeds' do
-      expect(described_class.account.keys).to match_array(
-        %i[
-          makerCommission takerCommission buyerCommission sellerCommission canTrade
-          canWithdraw canDeposit updateTime accountType balances permissions
-        ]
-      )
-    end
-  end
-
   describe '.new_order_test' do
     let(:json) { File.read('spec/fixtures/account/new_order_test.json') }
 
@@ -95,6 +78,39 @@ RSpec.describe Binance::Connector::Api::Account do
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
+        ]
+      )
+    end
+  end
+
+  describe '.account' do
+    let(:json) { File.read('spec/fixtures/account/account.json') }
+
+    before do
+      allow(HTTParty).to receive(:get).and_return(json)
+    end
+
+    it 'succeeds' do
+      expect(described_class.account.keys).to match_array(
+        %i[
+          makerCommission takerCommission buyerCommission sellerCommission canTrade
+          canWithdraw canDeposit updateTime accountType balances permissions
+        ]
+      )
+    end
+  end
+
+  describe '.my_trades' do
+    let(:json) { File.read('spec/fixtures/account/my_trades.json') }
+
+    before do
+      allow(HTTParty).to receive(:get).and_return(json)
+    end
+
+    it 'succeeds' do
+      expect(described_class.my_trades('XRPUSDT').first.keys).to match_array(
+        %i[
+          symbol id orderId orderListId price qty quoteQty commission commissionAsset time isBuyer isMaker isBestMatch
         ]
       )
     end

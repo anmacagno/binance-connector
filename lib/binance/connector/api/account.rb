@@ -4,11 +4,6 @@ module Binance
   module Connector
     module Api
       module Account
-        def self.account
-          params = {}
-          HttpClient.get(Api.url('/api/v3/account'), Api.options(params, :user_data))
-        end
-
         def self.new_order_test(symbol, side, type, time_in_force, quantity, quote_quantity, price)
           params = {
             symbol: symbol,
@@ -56,6 +51,18 @@ module Binance
             symbol: symbol
           }
           HttpClient.get(Api.url('/api/v3/allOrders'), Api.options(params, :user_data))
+        end
+
+        def self.account
+          params = {}
+          HttpClient.get(Api.url('/api/v3/account'), Api.options(params, :user_data))
+        end
+
+        def self.my_trades(symbol)
+          params = {
+            symbol: symbol
+          }
+          HttpClient.get(Api.url('/api/v3/myTrades'), Api.options(params, :user_data))
         end
       end
     end
