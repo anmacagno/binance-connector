@@ -2,10 +2,10 @@
 
 RSpec.describe Binance::Connector::Api::Account do
   describe '.account' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/account/account.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/account/account.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do
@@ -19,10 +19,10 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.new_order_test' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/account/new_order_test.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/account/new_order_test.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:post).and_return(json)
+      allow(HTTParty).to receive(:post).and_return(json)
     end
 
     it 'creates a buy market order' do
@@ -33,10 +33,10 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.new_order' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/account/new_order.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/account/new_order.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:post).and_return(json)
+      allow(HTTParty).to receive(:post).and_return(json)
     end
 
     it 'creates a buy limit order' do
@@ -50,10 +50,10 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.cancel_order' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/account/cancel_order.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/account/cancel_order.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:delete).and_return(json)
+      allow(HTTParty).to receive(:delete).and_return(json)
     end
 
     it 'succeeds' do
@@ -67,10 +67,10 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.query_order' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/account/query_order.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/account/query_order.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do
@@ -84,10 +84,10 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.all_orders' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/account/all_orders.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/account/all_orders.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do

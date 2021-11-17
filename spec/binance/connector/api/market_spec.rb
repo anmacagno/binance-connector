@@ -2,10 +2,10 @@
 
 RSpec.describe Binance::Connector::Api::Market do
   describe '.ping' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/market/ping.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/market/ping.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do
@@ -16,10 +16,10 @@ RSpec.describe Binance::Connector::Api::Market do
   end
 
   describe '.time' do
-    let(:json) { JSON.parse(File.read('spec/fixtures/market/time.json'), symbolize_names: true) }
+    let(:json) { File.read('spec/fixtures/market/time.json') }
 
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do
@@ -31,11 +31,11 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.exchange_info' do
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     context 'when the symbols are valid' do
-      let(:json) { JSON.parse(File.read('spec/fixtures/market/exchangeInfo.json'), symbolize_names: true) }
+      let(:json) { File.read('spec/fixtures/market/exchangeInfo.json') }
 
       it 'succeeds' do
         expect(described_class.exchange_info(%w[BTCUSDT ETHUSDT]).keys).to match_array(
@@ -47,11 +47,11 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.klines' do
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     context 'when the symbol is valid' do
-      let(:json) { JSON.parse(File.read('spec/fixtures/market/klines.json'), symbolize_names: true) }
+      let(:json) { File.read('spec/fixtures/market/klines.json') }
 
       it 'succeeds' do
         expect(described_class.klines('ETHUSDT', '1d', nil, nil, '7').size).to eq(7)
@@ -61,11 +61,11 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.avg_price' do
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     context 'when the symbol is valid' do
-      let(:json) { JSON.parse(File.read('spec/fixtures/market/avgPrice.json'), symbolize_names: true) }
+      let(:json) { File.read('spec/fixtures/market/avgPrice.json') }
 
       it 'succeeds' do
         expect(described_class.avg_price('ETHUSDT').keys).to match_array(
@@ -77,11 +77,11 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.ticker_price' do
     before do
-      allow(Binance::Connector::HttpClient).to receive(:get).and_return(json)
+      allow(HTTParty).to receive(:get).and_return(json)
     end
 
     context 'when the symbol is valid' do
-      let(:json) { JSON.parse(File.read('spec/fixtures/market/ticker_price.json'), symbolize_names: true) }
+      let(:json) { File.read('spec/fixtures/market/ticker_price.json') }
 
       it 'succeeds' do
         expect(described_class.ticker_price('ETHUSDT').keys).to match_array(
