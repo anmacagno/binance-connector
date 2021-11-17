@@ -35,7 +35,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
 
     context 'when the symbols are valid' do
-      let(:json) { File.read('spec/fixtures/market/exchangeInfo.json') }
+      let(:json) { File.read('spec/fixtures/market/exchange_info.json') }
 
       it 'succeeds' do
         expect(described_class.exchange_info(%w[BTCUSDT ETHUSDT]).keys).to match_array(
@@ -65,7 +65,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
 
     context 'when the symbol is valid' do
-      let(:json) { File.read('spec/fixtures/market/avgPrice.json') }
+      let(:json) { File.read('spec/fixtures/market/avg_price.json') }
 
       it 'succeeds' do
         expect(described_class.avg_price('ETHUSDT').keys).to match_array(
