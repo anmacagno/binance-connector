@@ -38,7 +38,7 @@ module Binance
           HttpClient.delete(Api.url('/api/v3/order'), Api.options(params, :trade))
         end
 
-        def self.query_order(symbol, order_id)
+        def self.get_order(symbol, order_id)
           params = {
             symbol: symbol,
             orderId: order_id
@@ -46,7 +46,7 @@ module Binance
           HttpClient.get(Api.url('/api/v3/order'), Api.options(params, :user_data))
         end
 
-        def self.all_orders(symbol)
+        def self.get_orders(symbol)
           params = {
             symbol: symbol
           }

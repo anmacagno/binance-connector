@@ -49,15 +49,15 @@ RSpec.describe Binance::Connector::Api::Account do
     end
   end
 
-  describe '.query_order' do
-    let(:json) { File.read('spec/fixtures/account/query_order.json') }
+  describe '.get_order' do
+    let(:json) { File.read('spec/fixtures/account/get_order.json') }
 
     before do
       allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do
-      expect(described_class.query_order('AVAXUSDT', '794968499').keys).to match_array(
+      expect(described_class.get_order('AVAXUSDT', '794968499').keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
@@ -66,15 +66,15 @@ RSpec.describe Binance::Connector::Api::Account do
     end
   end
 
-  describe '.all_orders' do
-    let(:json) { File.read('spec/fixtures/account/all_orders.json') }
+  describe '.get_orders' do
+    let(:json) { File.read('spec/fixtures/account/get_orders.json') }
 
     before do
       allow(HTTParty).to receive(:get).and_return(json)
     end
 
     it 'succeeds' do
-      expect(described_class.all_orders('AVAXUSDT').first.keys).to match_array(
+      expect(described_class.get_orders('AVAXUSDT').first.keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
