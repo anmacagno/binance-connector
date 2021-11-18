@@ -25,10 +25,8 @@ RSpec.describe Binance::Connector::Api do
     let(:params) { {} }
 
     context 'when security type is none' do
-      let(:security_type) { :none }
-
       it 'succeeds' do
-        expect(described_class.options(params, security_type)).to eq(
+        expect(described_class.options(params, :none)).to eq(
           {
             query: params
           }
