@@ -12,6 +12,8 @@ Gem::Specification.new do |spec|
   spec.description   = 'Connector to Binance public API implemented in Ruby'
   spec.required_ruby_version = '>= 3.0.0'
 
+  spec.metadata['rubygems_mfa_required'] = 'true'
+
   spec.files         = Dir['lib/**/*.rb']
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
