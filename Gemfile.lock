@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     binance-connector (0.1.0)
+      dotenv (~> 2.7)
       httparty (~> 0.20)
 
 GEM
@@ -67,7 +68,6 @@ PLATFORMS
 
 DEPENDENCIES
   binance-connector!
-  dotenv (~> 2.7)
   rake (~> 13.0)
   rspec (~> 3.10)
   rubocop (~> 1.22)
