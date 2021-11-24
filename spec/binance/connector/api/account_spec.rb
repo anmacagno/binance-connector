@@ -2,13 +2,10 @@
 
 RSpec.describe Binance::Connector::Api::Account do
   include_context 'with environment variables'
+  include_context 'with mocked http responses'
 
   describe '.new_order_test' do
     let(:json) { File.read('spec/fixtures/account/new_order_test.json') }
-
-    before do
-      allow(HTTParty).to receive(:post).and_return(json)
-    end
 
     it 'creates a buy market order' do
       expect(described_class.new_order_test('ETHUSDT', 'BUY', 'MARKET', nil, nil, 10, nil)).to eq(
@@ -19,10 +16,6 @@ RSpec.describe Binance::Connector::Api::Account do
 
   describe '.new_order' do
     let(:json) { File.read('spec/fixtures/account/new_order.json') }
-
-    before do
-      allow(HTTParty).to receive(:post).and_return(json)
-    end
 
     it 'creates a buy limit order' do
       expect(described_class.new_order('AVAXUSDT', 'BUY', 'LIMIT', 'GTC', 1, nil, 60).keys).to match_array(
@@ -37,10 +30,6 @@ RSpec.describe Binance::Connector::Api::Account do
   describe '.cancel_order' do
     let(:json) { File.read('spec/fixtures/account/cancel_order.json') }
 
-    before do
-      allow(HTTParty).to receive(:delete).and_return(json)
-    end
-
     it 'succeeds' do
       expect(described_class.cancel_order('AVAXUSDT', '794968499').keys).to match_array(
         %i[
@@ -53,10 +42,6 @@ RSpec.describe Binance::Connector::Api::Account do
 
   describe '.get_order' do
     let(:json) { File.read('spec/fixtures/account/get_order.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
 
     it 'succeeds' do
       expect(described_class.get_order('AVAXUSDT', '794968499').keys).to match_array(
@@ -71,10 +56,6 @@ RSpec.describe Binance::Connector::Api::Account do
   describe '.get_orders' do
     let(:json) { File.read('spec/fixtures/account/get_orders.json') }
 
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
-
     it 'succeeds' do
       expect(described_class.get_orders('AVAXUSDT').first.keys).to match_array(
         %i[
@@ -88,10 +69,6 @@ RSpec.describe Binance::Connector::Api::Account do
   describe '.account' do
     let(:json) { File.read('spec/fixtures/account/account.json') }
 
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
-
     it 'succeeds' do
       expect(described_class.account.keys).to match_array(
         %i[
@@ -104,10 +81,6 @@ RSpec.describe Binance::Connector::Api::Account do
 
   describe '.my_trades' do
     let(:json) { File.read('spec/fixtures/account/my_trades.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
 
     it 'succeeds' do
       expect(described_class.my_trades('XRPUSDT').first.keys).to match_array(

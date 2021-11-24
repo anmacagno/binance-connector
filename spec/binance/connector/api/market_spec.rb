@@ -2,13 +2,10 @@
 
 RSpec.describe Binance::Connector::Api::Market do
   include_context 'with environment variables'
+  include_context 'with mocked http responses'
 
   describe '.ping' do
     let(:json) { File.read('spec/fixtures/market/ping.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
 
     it 'succeeds' do
       expect(described_class.ping).to eq(
@@ -20,10 +17,6 @@ RSpec.describe Binance::Connector::Api::Market do
   describe '.time' do
     let(:json) { File.read('spec/fixtures/market/time.json') }
 
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
-
     it 'succeeds' do
       expect(described_class.time.keys).to match_array(
         %i[serverTime]
@@ -33,10 +26,6 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.exchange_info' do
     let(:json) { File.read('spec/fixtures/market/exchange_info.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
 
     it 'succeeds' do
       expect(described_class.exchange_info(%w[BTCUSDT ETHUSDT]).keys).to match_array(
@@ -48,10 +37,6 @@ RSpec.describe Binance::Connector::Api::Market do
   describe '.klines' do
     let(:json) { File.read('spec/fixtures/market/klines.json') }
 
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
-
     it 'succeeds' do
       expect(described_class.klines('ETHUSDT', '1d', nil, nil, '7').size).to eq(7)
     end
@@ -59,10 +44,6 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.avg_price' do
     let(:json) { File.read('spec/fixtures/market/avg_price.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
 
     it 'succeeds' do
       expect(described_class.avg_price('ETHUSDT').keys).to match_array(
@@ -73,10 +54,6 @@ RSpec.describe Binance::Connector::Api::Market do
 
   describe '.ticker_price' do
     let(:json) { File.read('spec/fixtures/market/ticker_price.json') }
-
-    before do
-      allow(HTTParty).to receive(:get).and_return(json)
-    end
 
     it 'succeeds' do
       expect(described_class.ticker_price('ETHUSDT').keys).to match_array(

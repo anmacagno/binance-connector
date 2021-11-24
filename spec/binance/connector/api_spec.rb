@@ -3,6 +3,30 @@
 RSpec.describe Binance::Connector::Api do
   include_context 'with environment variables'
 
+  describe '.base_url' do
+    it 'succeeds' do
+      expect(described_class.base_url).to eq(
+        'https://api.binance.com'
+      )
+    end
+  end
+
+  describe '.api_key' do
+    it 'succeeds' do
+      expect(described_class.api_key).to eq(
+        'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A'
+      )
+    end
+  end
+
+  describe '.secret_key' do
+    it 'succeeds' do
+      expect(described_class.secret_key).to eq(
+        'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
+      )
+    end
+  end
+
   describe '.url' do
     it 'succeeds' do
       expect(described_class.url('/path')).to eq(
