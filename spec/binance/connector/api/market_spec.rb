@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Binance::Connector::Api::Market do
+  include_context 'with environment variables'
+
   describe '.ping' do
     let(:json) { File.read('spec/fixtures/market/ping.json') }
 

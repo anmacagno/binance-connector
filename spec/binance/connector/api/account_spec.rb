@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Binance::Connector::Api::Account do
+  include_context 'with environment variables'
+
   describe '.new_order_test' do
     let(:json) { File.read('spec/fixtures/account/new_order_test.json') }
 

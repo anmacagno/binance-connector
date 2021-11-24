@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dotenv/load'
-
 require_relative 'connector/api'
 require_relative 'connector/api/account'
 require_relative 'connector/api/market'

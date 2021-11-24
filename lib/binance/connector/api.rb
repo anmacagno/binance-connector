@@ -3,7 +3,9 @@
 module Binance
   module Connector
     module Api
-      BASE_URL = 'https://api.binance.com'
+      def self.base_url
+        ENV.fetch('BINANCE_BASE_URL')
+      end
 
       def self.api_key
         ENV.fetch('BINANCE_API_KEY')
@@ -14,7 +16,7 @@ module Binance
       end
 
       def self.url(path)
-        BASE_URL + path
+        base_url + path
       end
 
       def self.options(params, security_type = :none)
