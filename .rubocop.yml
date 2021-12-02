@@ -13,6 +13,9 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
 
+Metrics/MethodLength:
+  Max: 15
+
 Metrics/ParameterLists:
   Enabled: false
 
