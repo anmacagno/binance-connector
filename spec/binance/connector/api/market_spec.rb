@@ -5,7 +5,7 @@ RSpec.describe Binance::Connector::Api::Market do
   include_context 'with mocked http responses'
 
   describe '.ping' do
-    let(:json) { File.read('spec/fixtures/market/ping.json') }
+    let(:json) { file_fixture('market/ping.json') }
 
     it 'succeeds' do
       expect(described_class.ping).to eq(
@@ -15,7 +15,7 @@ RSpec.describe Binance::Connector::Api::Market do
   end
 
   describe '.time' do
-    let(:json) { File.read('spec/fixtures/market/time.json') }
+    let(:json) { file_fixture('market/time.json') }
 
     it 'succeeds' do
       expect(described_class.time.keys).to match_array(
@@ -25,7 +25,7 @@ RSpec.describe Binance::Connector::Api::Market do
   end
 
   describe '.exchange_info' do
-    let(:json) { File.read('spec/fixtures/market/exchange_info.json') }
+    let(:json) { file_fixture('market/exchange_info.json') }
 
     it 'succeeds' do
       expect(described_class.exchange_info(%w[BTCUSDT ETHUSDT]).keys).to match_array(
@@ -35,7 +35,7 @@ RSpec.describe Binance::Connector::Api::Market do
   end
 
   describe '.klines' do
-    let(:json) { File.read('spec/fixtures/market/klines.json') }
+    let(:json) { file_fixture('market/klines.json') }
 
     it 'succeeds' do
       expect(described_class.klines('ETHUSDT', '1d', nil, nil, '7').size).to eq(7)
@@ -43,7 +43,7 @@ RSpec.describe Binance::Connector::Api::Market do
   end
 
   describe '.avg_price' do
-    let(:json) { File.read('spec/fixtures/market/avg_price.json') }
+    let(:json) { file_fixture('market/avg_price.json') }
 
     it 'succeeds' do
       expect(described_class.avg_price('ETHUSDT').keys).to match_array(
@@ -53,7 +53,7 @@ RSpec.describe Binance::Connector::Api::Market do
   end
 
   describe '.ticker_price' do
-    let(:json) { File.read('spec/fixtures/market/ticker_price.json') }
+    let(:json) { file_fixture('market/ticker_price.json') }
 
     it 'succeeds' do
       expect(described_class.ticker_price('ETHUSDT').keys).to match_array(

@@ -5,7 +5,7 @@ RSpec.describe Binance::Connector::Api::Wallet do
   include_context 'with mocked http responses'
 
   describe '.system_status' do
-    let(:json) { File.read('spec/fixtures/wallet/system_status.json') }
+    let(:json) { file_fixture('wallet/system_status.json') }
 
     it 'succeeds' do
       expect(described_class.system_status).to eq(

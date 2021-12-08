@@ -5,7 +5,7 @@ RSpec.describe Binance::Connector::Api::Account do
   include_context 'with mocked http responses'
 
   describe '.new_order_test' do
-    let(:json) { File.read('spec/fixtures/account/new_order_test.json') }
+    let(:json) { file_fixture('account/new_order_test.json') }
 
     it 'creates a buy market order' do
       expect(described_class.new_order_test('ETHUSDT', 'BUY', 'MARKET', nil, nil, 10, nil)).to eq(
@@ -15,7 +15,7 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.new_order' do
-    let(:json) { File.read('spec/fixtures/account/new_order.json') }
+    let(:json) { file_fixture('account/new_order.json') }
 
     it 'creates a buy limit order' do
       expect(described_class.new_order('AVAXUSDT', 'BUY', 'LIMIT', 'GTC', 1, nil, 60).keys).to match_array(
@@ -28,7 +28,7 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.cancel_order' do
-    let(:json) { File.read('spec/fixtures/account/cancel_order.json') }
+    let(:json) { file_fixture('account/cancel_order.json') }
 
     it 'succeeds' do
       expect(described_class.cancel_order('AVAXUSDT', '794968499').keys).to match_array(
@@ -41,7 +41,7 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.get_order' do
-    let(:json) { File.read('spec/fixtures/account/get_order.json') }
+    let(:json) { file_fixture('account/get_order.json') }
 
     it 'succeeds' do
       expect(described_class.get_order('AVAXUSDT', '794968499').keys).to match_array(
@@ -54,7 +54,7 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.get_orders' do
-    let(:json) { File.read('spec/fixtures/account/get_orders.json') }
+    let(:json) { file_fixture('account/get_orders.json') }
 
     it 'succeeds' do
       expect(described_class.get_orders('AVAXUSDT').first.keys).to match_array(
@@ -67,7 +67,7 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.account' do
-    let(:json) { File.read('spec/fixtures/account/account.json') }
+    let(:json) { file_fixture('account/account.json') }
 
     it 'succeeds' do
       expect(described_class.account.keys).to match_array(
@@ -80,7 +80,7 @@ RSpec.describe Binance::Connector::Api::Account do
   end
 
   describe '.my_trades' do
-    let(:json) { File.read('spec/fixtures/account/my_trades.json') }
+    let(:json) { file_fixture('account/my_trades.json') }
 
     it 'succeeds' do
       expect(described_class.my_trades('XRPUSDT').first.keys).to match_array(
