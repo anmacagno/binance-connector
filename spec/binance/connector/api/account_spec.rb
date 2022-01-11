@@ -40,11 +40,37 @@ RSpec.describe Binance::Connector::Api::Account do
     end
   end
 
+  describe '.cancel_open_orders' do
+    let(:json) { file_fixture('account/cancel_open_orders.json') }
+
+    it 'succeeds' do
+      expect(described_class.cancel_open_orders('SOLBUSD').first.keys).to match_array(
+        %i[
+          symbol origClientOrderId orderId orderListId clientOrderId price
+          origQty executedQty cummulativeQuoteQty status timeInForce type side
+        ]
+      )
+    end
+  end
+
   describe '.get_order' do
     let(:json) { file_fixture('account/get_order.json') }
 
     it 'succeeds' do
       expect(described_class.get_order('AVAXUSDT', '794968499').keys).to match_array(
+        %i[
+          symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
+          timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
+        ]
+      )
+    end
+  end
+
+  describe '.get_open_orders' do
+    let(:json) { file_fixture('account/get_open_orders.json') }
+
+    it 'succeeds' do
+      expect(described_class.get_open_orders('SOLBUSD').first.keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty

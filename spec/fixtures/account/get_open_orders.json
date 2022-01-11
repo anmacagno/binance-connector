@@ -1,0 +1,22 @@
+[
+  {
+    "symbol": "SOLBUSD",
+    "orderId": 628202174,
+    "orderListId": -1,
+    "clientOrderId": "ios_c1ca3b2e63304421b32e56506087b308",
+    "price": "200.00000000",
+    "origQty": "5.00000000",
+    "executedQty": "0.00000000",
+    "cummulativeQuoteQty": "0.00000000",
+    "status": "NEW",
+    "timeInForce": "GTC",
+    "type": "LIMIT",
+    "side": "SELL",
+    "stopPrice": "0.00000000",
+    "icebergQty": "0.00000000",
+    "time": 1641864631139,
+    "updateTime": 1641864631139,
+    "isWorking": true,
+    "origQuoteOrderQty": "0.00000000"
+  }
+]

@@ -38,12 +38,26 @@ module Binance
           HttpClient.delete(Api.url('/api/v3/order'), Api.options(params, :trade))
         end
 
+        def self.cancel_open_orders(symbol)
+          params = {
+            symbol: symbol
+          }
+          HttpClient.delete(Api.url('/api/v3/openOrders'), Api.options(params, :trade))
+        end
+
         def self.get_order(symbol, order_id)
           params = {
             symbol: symbol,
             orderId: order_id
           }
           HttpClient.get(Api.url('/api/v3/order'), Api.options(params, :user_data))
+        end
+
+        def self.get_open_orders(symbol)
+          params = {
+            symbol: symbol
+          }
+          HttpClient.get(Api.url('/api/v3/openOrders'), Api.options(params, :user_data))
         end
 
         def self.get_orders(symbol)
