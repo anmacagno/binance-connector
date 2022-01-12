@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['anmacagno']
   spec.email         = ['anmacagno@gmail.com']
 
-  spec.summary       = 'Connector to Binance public API'
-  spec.description   = 'Connector to Binance public API implemented in Ruby'
+  spec.summary       = 'Connector to Binance API'
+  spec.description   = 'Connector to Binance API implemented in Ruby'
   spec.required_ruby_version = '>= 3.0.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
