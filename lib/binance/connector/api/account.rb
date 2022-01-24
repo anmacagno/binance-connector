@@ -72,9 +72,10 @@ module Binance
           HttpClient.get(Api.url('/api/v3/account'), Api.options(params, :user_data))
         end
 
-        def self.my_trades(symbol)
+        def self.my_trades(symbol, order_id)
           params = {
-            symbol: symbol
+            symbol: symbol,
+            orderId: order_id
           }
           HttpClient.get(Api.url('/api/v3/myTrades'), Api.options(params, :user_data))
         end

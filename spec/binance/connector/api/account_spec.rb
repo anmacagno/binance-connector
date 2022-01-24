@@ -109,7 +109,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/my_trades.json') }
 
     it 'succeeds' do
-      expect(described_class.my_trades('XRPUSDT').first.keys).to match_array(
+      expect(described_class.my_trades('XRPUSDT', nil).first.keys).to match_array(
         %i[
           symbol id orderId orderListId price qty quoteQty commission commissionAsset time isBuyer isMaker isBestMatch
         ]
