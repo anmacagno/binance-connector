@@ -5,7 +5,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'binance-connector'
+gem 'binance-connector', '~> 0.1'
 ```
 
 And then execute:
@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake rspec` to run the tests. You can
 also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the
@@ -29,4 +29,4 @@ push git commits and the created tag, and push the `.gem` file to [rubygems.org]
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/binance-connector.
+Bug reports and pull requests are welcome on GitHub at https://github.com/anmacagno/binance-connector.
