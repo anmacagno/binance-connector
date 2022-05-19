@@ -19,16 +19,12 @@ module Binance
         base_url + path
       end
 
-      def self.options(params, security_type = :none)
-        params.compact!
-        case security_type
-        when :none
-          { query: params }
-        when :trade, :margin, :user_data
-          { query: sign_params(params), headers: { 'X-MBX-APIKEY': api_key } }
-        when :user_stream, :market_data
-          { query: params, headers: { 'X-MBX-APIKEY': api_key } }
-        end
+      def self.options_unsigned(params)
+        { query: params.compact }
+      end
+
+      def self.options_signed(params)
+        { query: sign_params(params.compact), headers: { 'X-MBX-APIKEY': api_key } }
       end
 
       def self.sign_params(params)

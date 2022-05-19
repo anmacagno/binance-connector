@@ -14,7 +14,7 @@ module Binance
             quoteOrderQty: quote_quantity,
             price: price
           }
-          HttpClient.post(Api.url('/api/v3/order/test'), Api.options(params, :trade))
+          HttpClient.post(Api.url('/api/v3/order/test'), Api.options_signed(params))
         end
 
         def self.new_order(symbol, side, type, time_in_force, quantity, quote_quantity, price)
@@ -27,7 +27,7 @@ module Binance
             quoteOrderQty: quote_quantity,
             price: price
           }
-          HttpClient.post(Api.url('/api/v3/order'), Api.options(params, :trade))
+          HttpClient.post(Api.url('/api/v3/order'), Api.options_signed(params))
         end
 
         def self.cancel_order(symbol, order_id)
@@ -35,14 +35,14 @@ module Binance
             symbol: symbol,
             orderId: order_id
           }
-          HttpClient.delete(Api.url('/api/v3/order'), Api.options(params, :trade))
+          HttpClient.delete(Api.url('/api/v3/order'), Api.options_signed(params))
         end
 
         def self.cancel_open_orders(symbol)
           params = {
             symbol: symbol
           }
-          HttpClient.delete(Api.url('/api/v3/openOrders'), Api.options(params, :trade))
+          HttpClient.delete(Api.url('/api/v3/openOrders'), Api.options_signed(params))
         end
 
         def self.get_order(symbol, order_id)
@@ -50,26 +50,26 @@ module Binance
             symbol: symbol,
             orderId: order_id
           }
-          HttpClient.get(Api.url('/api/v3/order'), Api.options(params, :user_data))
+          HttpClient.get(Api.url('/api/v3/order'), Api.options_signed(params))
         end
 
         def self.get_open_orders(symbol)
           params = {
             symbol: symbol
           }
-          HttpClient.get(Api.url('/api/v3/openOrders'), Api.options(params, :user_data))
+          HttpClient.get(Api.url('/api/v3/openOrders'), Api.options_signed(params))
         end
 
         def self.get_orders(symbol)
           params = {
             symbol: symbol
           }
-          HttpClient.get(Api.url('/api/v3/allOrders'), Api.options(params, :user_data))
+          HttpClient.get(Api.url('/api/v3/allOrders'), Api.options_signed(params))
         end
 
         def self.account
           params = {}
-          HttpClient.get(Api.url('/api/v3/account'), Api.options(params, :user_data))
+          HttpClient.get(Api.url('/api/v3/account'), Api.options_signed(params))
         end
 
         def self.my_trades(symbol, order_id)
@@ -77,7 +77,7 @@ module Binance
             symbol: symbol,
             orderId: order_id
           }
-          HttpClient.get(Api.url('/api/v3/myTrades'), Api.options(params, :user_data))
+          HttpClient.get(Api.url('/api/v3/myTrades'), Api.options_signed(params))
         end
       end
     end

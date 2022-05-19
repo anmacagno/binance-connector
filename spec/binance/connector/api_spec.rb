@@ -35,7 +35,19 @@ RSpec.describe Binance::Connector::Api do
     end
   end
 
-  describe '.options' do
+  describe '.options_unsigned' do
+    let(:params) { {} }
+
+    it 'succeeds' do
+      expect(described_class.options_unsigned(params)).to eq(
+        {
+          query: params
+        }
+      )
+    end
+  end
+
+  describe '.options_signed' do
     before do
       allow(Time).to receive(:now).and_return(
         Time.utc(2021, 10, 27)
@@ -44,46 +56,19 @@ RSpec.describe Binance::Connector::Api do
 
     let(:params) { {} }
 
-    context 'when security type is none' do
-      it 'succeeds' do
-        expect(described_class.options(params, :none)).to eq(
-          {
-            query: params
-          }
-        )
-      end
-    end
-
-    %i[trade margin user_data].each do |security_type|
-      context "when security type is #{security_type}" do
-        it 'succeeds' do
-          expect(described_class.options(params, security_type)).to eq(
+    it 'succeeds' do
+      expect(described_class.options_signed(params)).to eq(
+        {
+          query: params.merge(
             {
-              query: params.merge(
-                {
-                  recvWindow: 5000,
-                  timestamp: '1635292800000',
-                  signature: 'acd753e01ad684b379ad67dd5e395402067e94b17143e30a86c77f2dfe53dff1'
-                }
-              ),
-              headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
+              recvWindow: 5000,
+              timestamp: '1635292800000',
+              signature: 'acd753e01ad684b379ad67dd5e395402067e94b17143e30a86c77f2dfe53dff1'
             }
-          )
-        end
-      end
-    end
-
-    %i[user_stream market_data].each do |security_type|
-      context "when security type is #{security_type}" do
-        it 'succeeds' do
-          expect(described_class.options(params, security_type)).to eq(
-            {
-              query: params,
-              headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
-            }
-          )
-        end
-      end
+          ),
+          headers: { 'X-MBX-APIKEY': 'vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A' }
+        }
+      )
     end
   end
 
