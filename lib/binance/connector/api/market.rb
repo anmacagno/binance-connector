@@ -14,7 +14,7 @@ module Binance
 
         def self.exchange_info(symbols)
           params = {
-            symbols: symbols.to_s.gsub(' ', '')
+            symbols: symbols.to_s.delete(' ')
           }
           HttpClient.get(Api.url('/api/v3/exchangeInfo'), Api.options_unsigned(params))
         end
