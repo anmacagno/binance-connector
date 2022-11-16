@@ -28,5 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-rspec', '~> 2.5'
   spec.add_development_dependency 'simplecov', '~> 0.21'
 
+  spec.add_dependency 'dry-validation', '~> 1.10'
   spec.add_dependency 'httparty', '~> 0.20'
 end

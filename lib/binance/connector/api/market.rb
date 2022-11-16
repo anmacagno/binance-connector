@@ -12,36 +12,24 @@ module Binance
           HttpClient.get(Api.url('/api/v3/time'))
         end
 
-        def self.exchange_info(symbols)
-          params = {
-            symbols: symbols.to_s.delete(' ')
-          }
-          HttpClient.get(Api.url('/api/v3/exchangeInfo'), Api.options_unsigned(params))
+        def self.exchange_info(args = {})
+          result = Contracts::ExchangeInfoContract.validate!(args)
+          HttpClient.get(Api.url('/api/v3/exchangeInfo'), Api.options_unsigned(result.to_h))
         end
 
-        def self.klines(symbol, interval, start_time, end_time, limit)
-          params = {
-            symbol: symbol,
-            interval: interval,
-            startTime: start_time,
-            endTime: end_time,
-            limit: limit
-          }
-          HttpClient.get(Api.url('/api/v3/klines'), Api.options_unsigned(params))
+        def self.klines(args = {})
+          result = Contracts::KlinesContract.validate!(args)
+          HttpClient.get(Api.url('/api/v3/klines'), Api.options_unsigned(result.to_h))
         end
 
-        def self.avg_price(symbol)
-          params = {
-            symbol: symbol
-          }
-          HttpClient.get(Api.url('/api/v3/avgPrice'), Api.options_unsigned(params))
+        def self.avg_price(args = {})
+          result = Contracts::AvgPriceContract.validate!(args)
+          HttpClient.get(Api.url('/api/v3/avgPrice'), Api.options_unsigned(result.to_h))
         end
 
-        def self.ticker_price(symbol)
-          params = {
-            symbol: symbol
-          }
-          HttpClient.get(Api.url('/api/v3/ticker/price'), Api.options_unsigned(params))
+        def self.ticker_price(args = {})
+          result = Contracts::TickerPriceContract.validate!(args)
+          HttpClient.get(Api.url('/api/v3/ticker/price'), Api.options_unsigned(result.to_h))
         end
       end
     end
