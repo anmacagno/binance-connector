@@ -12,6 +12,8 @@ module Binance
           optional(:limit).value(:integer, gteq?: 1, lteq?: 1000)
 
           after(:rule_applier) do |result|
+            next unless result.success?
+
             result.output[:startTime] = result.output[:startTime].strftime('%s%3N') if result.key?(:startTime)
             result.output[:endTime] = result.output[:endTime].strftime('%s%3N') if result.key?(:endTime)
           end

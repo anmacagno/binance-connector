@@ -56,7 +56,7 @@ RSpec.describe Binance::Connector::Api::Market do
     let(:json) { file_fixture('market/ticker_price.json') }
 
     it 'succeeds' do
-      expect(described_class.ticker_price(symbol: 'ETHUSDT').keys).to match_array(
+      expect(described_class.ticker_price(symbols: %w[BTCUSDT ETHUSDT]).keys).to match_array(
         %i[symbol price]
       )
     end

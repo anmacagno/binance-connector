@@ -14,6 +14,16 @@ RSpec.shared_examples 'a contract' do |validations:|
       end
     end
 
+    validations[:integer]&.each do |key|
+      context "when #{key} is nil" do
+        let(:args) { { key => nil } }
+
+        it 'fails' do
+          expect(errors).to include(key => ['must be an integer'])
+        end
+      end
+    end
+
     validations[:string]&.each do |key|
       context "when #{key} is nil" do
         let(:args) { { key => nil } }
@@ -28,6 +38,16 @@ RSpec.shared_examples 'a contract' do |validations:|
 
         it 'fails' do
           expect(errors).to include(key => ['must be filled'])
+        end
+      end
+    end
+
+    validations[:time]&.each do |key|
+      context "when #{key} is nil" do
+        let(:args) { { key => nil } }
+
+        it 'fails' do
+          expect(errors).to include(key => ['must be a time'])
         end
       end
     end
