@@ -47,38 +47,4 @@ RSpec.describe Binance::Connector::Api do
       )
     end
   end
-
-  describe '.sign_params' do
-    before do
-      allow(Time).to receive(:now).and_return(
-        Time.utc(2021, 10, 27)
-      )
-    end
-
-    let(:params) { {} }
-
-    it 'succeeds' do
-      expect(api.sign_params(params)).to eq(
-        params.merge(
-          {
-            recvWindow: 5000,
-            timestamp: '1635292800000',
-            signature: '2e2a239db849bbac570ee1c25686876b6ef0c7ff0c8a3aa048a9262f2772c9c6'
-          }
-        )
-      )
-    end
-  end
-
-  describe '.timestamp' do
-    before do
-      allow(Time).to receive(:now).and_return(
-        Time.utc(2021, 10, 27)
-      )
-    end
-
-    it 'succeeds' do
-      expect(api.timestamp).to eq('1635292800000')
-    end
-  end
 end

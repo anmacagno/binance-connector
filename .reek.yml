@@ -5,3 +5,6 @@ detectors:
     enabled: false
   TooManyStatements:
     enabled: false
+  UtilityFunction:
+    exclude:
+      - Binance::Connector::Api#options_unsigned

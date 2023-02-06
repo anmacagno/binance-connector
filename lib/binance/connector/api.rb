@@ -30,19 +30,22 @@ module Binance
       end
 
       def options_signed(params)
-        { query: sign_params(params.compact), headers: { 'X-MBX-APIKEY': api_key } }
+        {
+          query: sign_params(params.compact),
+          headers: { 'X-MBX-APIKEY': api_key }
+        }
       end
 
+      private
+
       def sign_params(params)
-        signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp })
-        signature = OpenSSL::HMAC.hexdigest(
-          OpenSSL::Digest.new('SHA256'), secret_key, URI.encode_www_form(signed_params)
-        )
+        signed_params = params.merge({ recvWindow: 5000, timestamp: Time.now.utc.strftime('%s%3N') })
+        signature = hmac_sign(URI.encode_www_form(signed_params))
         signed_params.merge({ signature: signature })
       end
 
-      def timestamp
-        Time.now.utc.strftime('%s%3N')
+      def hmac_sign(data)
+        OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('SHA256'), secret_key, data)
       end
     end
   end
