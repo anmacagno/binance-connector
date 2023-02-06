@@ -2,34 +2,34 @@
 
 module Binance
   module Connector
-    module Api
+    class Api
       module Market
-        def self.ping
-          HttpClient.get(Api.url('/api/v3/ping'))
+        def ping
+          HttpClient.get(url('/api/v3/ping'))
         end
 
-        def self.time
-          HttpClient.get(Api.url('/api/v3/time'))
+        def time
+          HttpClient.get(url('/api/v3/time'))
         end
 
-        def self.exchange_info(args = {})
+        def exchange_info(args = {})
           result = Contracts::ExchangeInfoContract.validate!(args)
-          HttpClient.get(Api.url('/api/v3/exchangeInfo'), Api.options_unsigned(result.to_h))
+          HttpClient.get(url('/api/v3/exchangeInfo'), options_unsigned(result.to_h))
         end
 
-        def self.klines(args = {})
+        def klines(args = {})
           result = Contracts::KlinesContract.validate!(args)
-          HttpClient.get(Api.url('/api/v3/klines'), Api.options_unsigned(result.to_h))
+          HttpClient.get(url('/api/v3/klines'), options_unsigned(result.to_h))
         end
 
-        def self.avg_price(args = {})
+        def avg_price(args = {})
           result = Contracts::AvgPriceContract.validate!(args)
-          HttpClient.get(Api.url('/api/v3/avgPrice'), Api.options_unsigned(result.to_h))
+          HttpClient.get(url('/api/v3/avgPrice'), options_unsigned(result.to_h))
         end
 
-        def self.ticker_price(args = {})
+        def ticker_price(args = {})
           result = Contracts::TickerPriceContract.validate!(args)
-          HttpClient.get(Api.url('/api/v3/ticker/price'), Api.options_unsigned(result.to_h))
+          HttpClient.get(url('/api/v3/ticker/price'), options_unsigned(result.to_h))
         end
       end
     end

@@ -20,6 +20,9 @@ Metrics/MethodLength:
 Metrics/ParameterLists:
   Enabled: false
 
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
 RSpec/ExampleLength:
   Enabled: false
 

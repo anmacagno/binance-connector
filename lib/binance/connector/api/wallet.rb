@@ -2,10 +2,10 @@
 
 module Binance
   module Connector
-    module Api
+    class Api
       module Wallet
-        def self.system_status
-          HttpClient.get(Api.url('/sapi/v1/system/status'))
+        def system_status
+          HttpClient.get(url('/sapi/v1/system/status'))
         end
       end
     end

@@ -1,33 +1,39 @@
 # frozen_string_literal: true
 
+require_relative 'api/account'
+require_relative 'api/market'
+require_relative 'api/wallet'
+
 module Binance
   module Connector
-    module Api
-      def self.base_url
-        ENV.fetch('BINANCE_BASE_URL')
+    class Api
+      include Binance::Connector::Api::Account
+      include Binance::Connector::Api::Market
+      include Binance::Connector::Api::Wallet
+
+      BASE_URL = 'https://api.binance.com'
+
+      attr_reader :api_key, :secret_key, :base_url
+
+      def initialize(api_key: '', secret_key: '', base_url: BASE_URL)
+        @api_key = api_key
+        @secret_key = secret_key
+        @base_url = base_url
       end
 
-      def self.api_key
-        ENV.fetch('BINANCE_API_KEY')
-      end
-
-      def self.secret_key
-        ENV.fetch('BINANCE_SECRET_KEY')
-      end
-
-      def self.url(path)
+      def url(path)
         base_url + path
       end
 
-      def self.options_unsigned(params)
+      def options_unsigned(params)
         { query: params.compact }
       end
 
-      def self.options_signed(params)
+      def options_signed(params)
         { query: sign_params(params.compact), headers: { 'X-MBX-APIKEY': api_key } }
       end
 
-      def self.sign_params(params)
+      def sign_params(params)
         signed_params = params.merge({ recvWindow: 5000, timestamp: timestamp })
         signature = OpenSSL::HMAC.hexdigest(
           OpenSSL::Digest.new('SHA256'), secret_key, URI.encode_www_form(signed_params)
@@ -35,7 +41,7 @@ module Binance
         signed_params.merge({ signature: signature })
       end
 
-      def self.timestamp
+      def timestamp
         Time.now.utc.strftime('%s%3N')
       end
     end
