@@ -5,7 +5,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     subject(:errors) { described_class.new.call(args).errors.to_h }
 
     validations[:required]&.each do |key|
-      context "when #{key} is not present" do
+      context "when required #{key} is not present" do
         let(:args) { {} }
 
         it 'fails' do
@@ -15,7 +15,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     end
 
     validations[:integer]&.each do |key|
-      context "when #{key} is nil" do
+      context "when integer #{key} is nil" do
         let(:args) { { key => nil } }
 
         it 'fails' do
@@ -25,7 +25,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     end
 
     validations[:string]&.each do |key|
-      context "when #{key} is nil" do
+      context "when string #{key} is nil" do
         let(:args) { { key => nil } }
 
         it 'fails' do
@@ -33,7 +33,7 @@ RSpec.shared_examples 'a contract' do |validations:|
         end
       end
 
-      context "when #{key} is empty" do
+      context "when string #{key} is empty" do
         let(:args) { { key => '' } }
 
         it 'fails' do
@@ -43,7 +43,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     end
 
     validations[:time]&.each do |key|
-      context "when #{key} is nil" do
+      context "when time #{key} is nil" do
         let(:args) { { key => nil } }
 
         it 'fails' do
@@ -53,7 +53,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     end
 
     validations[:format]&.each do |key|
-      context "when #{key} is invalid" do
+      context "when #{key} has an invalid format" do
         let(:args) { { key => ':' } }
 
         it 'fails' do
@@ -63,7 +63,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     end
 
     validations[:inclusion]&.each do |key|
-      context "when #{key} is invalid" do
+      context "when #{key} has an invalid value" do
         let(:args) { { key => ':' } }
 
         it 'fails' do
@@ -73,7 +73,7 @@ RSpec.shared_examples 'a contract' do |validations:|
     end
 
     validations[:array]&.each do |key|
-      context "when #{key} is nil" do
+      context "when array #{key} is nil" do
         let(:args) { { key => nil } }
 
         it 'fails' do
@@ -81,7 +81,7 @@ RSpec.shared_examples 'a contract' do |validations:|
         end
       end
 
-      context "when #{key} is empty" do
+      context "when array #{key} is empty" do
         let(:args) { { key => [] } }
 
         it 'fails' do
@@ -89,7 +89,7 @@ RSpec.shared_examples 'a contract' do |validations:|
         end
       end
 
-      context "when #{key} has a nil element" do
+      context "when array #{key} has a nil element" do
         let(:args) { { key => [nil] } }
 
         it 'fails' do
@@ -97,7 +97,7 @@ RSpec.shared_examples 'a contract' do |validations:|
         end
       end
 
-      context "when #{key} has an empty element" do
+      context "when array #{key} has an empty element" do
         let(:args) { { key => [''] } }
 
         it 'fails' do

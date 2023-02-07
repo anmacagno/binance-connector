@@ -29,11 +29,33 @@ RSpec.describe Binance::Connector::Contracts::KlinesContract do
       end
     end
 
-    context 'when args is not valid' do
-      let(:args) { { unexpected: :reality } }
+    context 'when args has a disallowed key' do
+      let(:args) { { symbol: 'ETHUSDT', interval: '1d', unexpected: :reality } }
 
       it 'raises an error' do
-        expect { result }.to raise_error(Binance::Connector::ContractError)
+        expect { result }.to raise_error(
+          Binance::Connector::ContractError, { unexpected: ['is not allowed'] }.to_s
+        )
+      end
+    end
+
+    context 'when limit is less than 1' do
+      let(:args) { { symbol: 'ETHUSDT', interval: '1d', limit: 0 } }
+
+      it 'raises an error' do
+        expect { result }.to raise_error(
+          Binance::Connector::ContractError, { limit: ['must be greater than or equal to 1'] }.to_s
+        )
+      end
+    end
+
+    context 'when limit is greater than 1000' do
+      let(:args) { { symbol: 'ETHUSDT', interval: '1d', limit: 1001 } }
+
+      it 'raises an error' do
+        expect { result }.to raise_error(
+          Binance::Connector::ContractError, { limit: ['must be less than or equal to 1000'] }.to_s
+        )
       end
     end
   end

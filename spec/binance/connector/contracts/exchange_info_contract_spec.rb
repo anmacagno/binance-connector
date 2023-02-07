@@ -22,11 +22,23 @@ RSpec.describe Binance::Connector::Contracts::ExchangeInfoContract do
       end
     end
 
-    context 'when args is not valid' do
-      let(:args) { { unexpected: :reality } }
+    context 'when args has a disallowed key' do
+      let(:args) { { symbols: %w[BTCUSDT ETHUSDT], unexpected: :reality } }
 
       it 'raises an error' do
-        expect { result }.to raise_error(Binance::Connector::ContractError)
+        expect { result }.to raise_error(
+          Binance::Connector::ContractError, { unexpected: ['is not allowed'] }.to_s
+        )
+      end
+    end
+
+    context 'when symbol and symbols are present' do
+      let(:args) { { symbol: 'BTCUSDT', symbols: %w[BTCUSDT ETHUSDT] } }
+
+      it 'raises an error' do
+        expect { result }.to raise_error(
+          Binance::Connector::ContractError, { nil => ['must only contain one of: symbol, symbols'] }.to_s
+        )
       end
     end
   end
