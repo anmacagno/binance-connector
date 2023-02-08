@@ -32,7 +32,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/cancel_order.json') }
 
     it 'succeeds' do
-      expect(api.cancel_order(symbol: 'AVAXUSDT', orderId: 794968499).keys).to match_array(
+      expect(api.cancel_order(symbol: 'AVAXUSDT', orderId: '794968499'.to_i).keys).to match_array(
         %i[
           symbol origClientOrderId orderId orderListId clientOrderId price
           origQty executedQty cummulativeQuoteQty status timeInForce type side
@@ -45,7 +45,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/get_order.json') }
 
     it 'succeeds' do
-      expect(api.get_order(symbol: 'AVAXUSDT', orderId: 794968499).keys).to match_array(
+      expect(api.get_order(symbol: 'AVAXUSDT', orderId: '794968499'.to_i).keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
