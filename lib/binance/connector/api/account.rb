@@ -35,13 +35,6 @@ module Binance
           HttpClient.delete(url('/api/v3/order'), options_signed(result.to_h))
         end
 
-        def cancel_open_orders(symbol)
-          params = {
-            symbol: symbol
-          }
-          HttpClient.delete(url('/api/v3/openOrders'), options_signed(params))
-        end
-
         def get_order(args = {})
           result = Contracts::GetOrderContract.validate!(args)
           HttpClient.get(url('/api/v3/order'), options_signed(result.to_h))
