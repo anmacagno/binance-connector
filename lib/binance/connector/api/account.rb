@@ -4,30 +4,14 @@ module Binance
   module Connector
     class Api
       module Account
-        def new_order_test(symbol, side, type, time_in_force, quantity, quote_quantity, price)
-          params = {
-            symbol: symbol,
-            side: side,
-            type: type,
-            timeInForce: time_in_force,
-            quantity: quantity,
-            quoteOrderQty: quote_quantity,
-            price: price
-          }
-          HttpClient.post(url('/api/v3/order/test'), options_signed(params))
+        def new_order_test(args = {})
+          result = Contracts::NewOrderContract.validate!(args)
+          HttpClient.post(url('/api/v3/order/test'), options_signed(result.to_h))
         end
 
-        def new_order(symbol, side, type, time_in_force, quantity, quote_quantity, price)
-          params = {
-            symbol: symbol,
-            side: side,
-            type: type,
-            timeInForce: time_in_force,
-            quantity: quantity,
-            quoteOrderQty: quote_quantity,
-            price: price
-          }
-          HttpClient.post(url('/api/v3/order'), options_signed(params))
+        def new_order(args = {})
+          result = Contracts::NewOrderContract.validate!(args)
+          HttpClient.post(url('/api/v3/order'), options_signed(result.to_h))
         end
 
         def cancel_order(args = {})

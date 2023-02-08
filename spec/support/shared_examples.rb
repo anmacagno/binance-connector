@@ -42,6 +42,16 @@ RSpec.shared_examples 'a contract' do |validations:|
       end
     end
 
+    validations[:decimal]&.each do |key|
+      context "when decimal #{key} is nil" do
+        let(:args) { { key => nil } }
+
+        it 'fails' do
+          expect(errors).to include(key => ['must be a decimal'])
+        end
+      end
+    end
+
     validations[:time]&.each do |key|
       context "when time #{key} is nil" do
         let(:args) { { key => nil } }

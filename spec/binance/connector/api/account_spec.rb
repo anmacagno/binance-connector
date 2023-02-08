@@ -9,7 +9,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/new_order_test.json') }
 
     it 'creates a buy market order' do
-      expect(api.new_order_test('ETHUSDT', 'BUY', 'MARKET', nil, nil, 10, nil)).to eq(
+      expect(api.new_order_test(symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quoteOrderQty: '10'.to_d)).to eq(
         {}
       )
     end
@@ -18,8 +18,12 @@ RSpec.describe Binance::Connector::Api::Account do
   describe '.new_order' do
     let(:json) { file_fixture('account/new_order.json') }
 
+    let(:args) do
+      { symbol: 'AVAXUSDT', side: 'BUY', type: 'LIMIT', time_in_force: 'GTC', quantity: '1'.to_d, price: '60'.to_d }
+    end
+
     it 'creates a buy limit order' do
-      expect(api.new_order('AVAXUSDT', 'BUY', 'LIMIT', 'GTC', 1, nil, 60).keys).to match_array(
+      expect(api.new_order(args).keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId transactTime price origQty
           executedQty cummulativeQuoteQty status timeInForce type side fills
