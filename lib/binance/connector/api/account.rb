@@ -30,12 +30,9 @@ module Binance
           HttpClient.post(url('/api/v3/order'), options_signed(params))
         end
 
-        def cancel_order(symbol, order_id)
-          params = {
-            symbol: symbol,
-            orderId: order_id
-          }
-          HttpClient.delete(url('/api/v3/order'), options_signed(params))
+        def cancel_order(args = {})
+          result = Contracts::CancelOrderContract.validate!(args)
+          HttpClient.delete(url('/api/v3/order'), options_signed(result.to_h))
         end
 
         def cancel_open_orders(symbol)
@@ -45,39 +42,28 @@ module Binance
           HttpClient.delete(url('/api/v3/openOrders'), options_signed(params))
         end
 
-        def get_order(symbol, order_id)
-          params = {
-            symbol: symbol,
-            orderId: order_id
-          }
-          HttpClient.get(url('/api/v3/order'), options_signed(params))
+        def get_order(args = {})
+          result = Contracts::GetOrderContract.validate!(args)
+          HttpClient.get(url('/api/v3/order'), options_signed(result.to_h))
         end
 
-        def get_open_orders(symbol)
-          params = {
-            symbol: symbol
-          }
-          HttpClient.get(url('/api/v3/openOrders'), options_signed(params))
+        def get_open_orders(args = {})
+          result = Contracts::GetOpenOrdersContract.validate!(args)
+          HttpClient.get(url('/api/v3/openOrders'), options_signed(result.to_h))
         end
 
-        def get_orders(symbol)
-          params = {
-            symbol: symbol
-          }
-          HttpClient.get(url('/api/v3/allOrders'), options_signed(params))
+        def get_orders(args = {})
+          result = Contracts::GetOrdersContract.validate!(args)
+          HttpClient.get(url('/api/v3/allOrders'), options_signed(result.to_h))
         end
 
         def account
-          params = {}
-          HttpClient.get(url('/api/v3/account'), options_signed(params))
+          HttpClient.get(url('/api/v3/account'), options_signed)
         end
 
-        def my_trades(symbol, order_id)
-          params = {
-            symbol: symbol,
-            orderId: order_id
-          }
-          HttpClient.get(url('/api/v3/myTrades'), options_signed(params))
+        def my_trades(args = {})
+          result = Contracts::MyTradesContract.validate!(args)
+          HttpClient.get(url('/api/v3/myTrades'), options_signed(result.to_h))
         end
       end
     end

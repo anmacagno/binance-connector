@@ -29,7 +29,7 @@ module Binance
         { query: params.compact }
       end
 
-      def options_signed(params)
+      def options_signed(params = {})
         {
           query: sign_params(params.compact),
           headers: { 'X-MBX-APIKEY': api_key }

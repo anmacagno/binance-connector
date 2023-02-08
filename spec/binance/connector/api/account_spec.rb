@@ -32,7 +32,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/cancel_order.json') }
 
     it 'succeeds' do
-      expect(api.cancel_order('AVAXUSDT', '794968499').keys).to match_array(
+      expect(api.cancel_order(symbol: 'AVAXUSDT', orderId: 794968499).keys).to match_array(
         %i[
           symbol origClientOrderId orderId orderListId clientOrderId price
           origQty executedQty cummulativeQuoteQty status timeInForce type side
@@ -58,7 +58,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/get_order.json') }
 
     it 'succeeds' do
-      expect(api.get_order('AVAXUSDT', '794968499').keys).to match_array(
+      expect(api.get_order(symbol: 'AVAXUSDT', orderId: 794968499).keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
@@ -71,7 +71,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/get_open_orders.json') }
 
     it 'succeeds' do
-      expect(api.get_open_orders('SOLBUSD').first.keys).to match_array(
+      expect(api.get_open_orders(symbol: 'SOLBUSD').first.keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
@@ -84,7 +84,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/get_orders.json') }
 
     it 'succeeds' do
-      expect(api.get_orders('AVAXUSDT').first.keys).to match_array(
+      expect(api.get_orders(symbol: 'AVAXUSDT').first.keys).to match_array(
         %i[
           symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
           timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
@@ -110,7 +110,7 @@ RSpec.describe Binance::Connector::Api::Account do
     let(:json) { file_fixture('account/my_trades.json') }
 
     it 'succeeds' do
-      expect(api.my_trades('XRPUSDT', nil).first.keys).to match_array(
+      expect(api.my_trades(symbol: 'XRPUSDT').first.keys).to match_array(
         %i[
           symbol id orderId orderListId price qty quoteQty commission commissionAsset time isBuyer isMaker isBestMatch
         ]
