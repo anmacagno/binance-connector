@@ -9,9 +9,9 @@ module Binance
           required(:side).filled(:string, included_in?: SIDE_OPTIONS)
           required(:type).filled(:string, included_in?: TYPE_OPTIONS)
           optional(:time_in_force).filled(:string, included_in?: TIME_IN_FORCE_OPTIONS)
-          optional(:quantity).value(:decimal)
-          optional(:quoteOrderQty).value(:decimal)
-          optional(:price).value(:decimal)
+          optional(:quantity).value(:float)
+          optional(:quoteOrderQty).value(:float)
+          optional(:price).value(:float)
         end
 
         rule(:time_in_force) do

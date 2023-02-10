@@ -4,7 +4,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
   it_behaves_like 'a contract', validations: {
     required: %i[symbol side type],
     string: %i[symbol side type time_in_force],
-    decimal: %i[quantity quoteOrderQty price],
+    float: %i[quantity quoteOrderQty price],
     format: %i[symbol],
     inclusion: %i[side type time_in_force]
   }
@@ -13,7 +13,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
     subject(:result) { described_class.validate!(args) }
 
     context 'when args is valid' do
-      let(:args) { { symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quoteOrderQty: '10'.to_d } }
+      let(:args) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005 } }
 
       it 'success' do
         expect(result.success?).to be true
@@ -21,7 +21,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
     end
 
     context 'when args has a disallowed key' do
-      let(:args) { { symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quoteOrderQty: '10'.to_d, unexpected: :reality } }
+      let(:args) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005, unexpected: :reality } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
@@ -31,7 +31,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
     end
 
     context 'when time_in_force is present and type is not limit' do
-      let(:args) { { symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quoteOrderQty: '10'.to_d, time_in_force: 'GTC' } }
+      let(:args) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005, time_in_force: 'GTC' } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
@@ -41,7 +41,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
     end
 
     context 'when quantity and quoteOrderQty are absent' do
-      let(:args) { { symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET' } }
+      let(:args) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET' } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
@@ -51,7 +51,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
     end
 
     context 'when quantity and quoteOrderQty are present' do
-      let(:args) { { symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quantity: '1'.to_d, quoteOrderQty: '10'.to_d } }
+      let(:args) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005, quoteOrderQty: 100.0 } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
@@ -61,7 +61,7 @@ RSpec.describe Binance::Connector::Contracts::NewOrderContract do
     end
 
     context 'when price is present and type is not limit' do
-      let(:args) { { symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quoteOrderQty: '10'.to_d, price: '20000'.to_d } }
+      let(:args) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005, price: 20_000.0 } }
 
       it 'raises an error' do
         expect { result }.to raise_error(

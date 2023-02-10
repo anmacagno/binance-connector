@@ -6,105 +6,65 @@ RSpec.describe Binance::Connector::Api::Account do
   include_context 'with mocked http responses'
 
   describe '.new_order_test' do
-    let(:json) { file_fixture('account/new_order_test.json') }
-
-    it 'creates a buy market order' do
-      expect(api.new_order_test(symbol: 'ETHUSDT', side: 'BUY', type: 'MARKET', quoteOrderQty: '10'.to_d)).to eq(
-        {}
+    it 'succeeds' do
+      expect(api.new_order_test(symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005)).to eq(
+        success_response
       )
     end
   end
 
   describe '.new_order' do
-    let(:json) { file_fixture('account/new_order.json') }
-
-    let(:args) do
-      { symbol: 'AVAXUSDT', side: 'BUY', type: 'LIMIT', time_in_force: 'GTC', quantity: '1'.to_d, price: '60'.to_d }
-    end
-
-    it 'creates a buy limit order' do
-      expect(api.new_order(args).keys).to match_array(
-        %i[
-          symbol orderId orderListId clientOrderId transactTime price origQty
-          executedQty cummulativeQuoteQty status timeInForce type side fills
-        ]
+    it 'succeeds' do
+      expect(api.new_order(symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005)).to eq(
+        success_response
       )
     end
   end
 
   describe '.cancel_order' do
-    let(:json) { file_fixture('account/cancel_order.json') }
-
     it 'succeeds' do
-      expect(api.cancel_order(symbol: 'AVAXUSDT', orderId: '794968499'.to_i).keys).to match_array(
-        %i[
-          symbol origClientOrderId orderId orderListId clientOrderId price
-          origQty executedQty cummulativeQuoteQty status timeInForce type side
-        ]
+      expect(api.cancel_order(symbol: 'BTCUSDT', orderId: 1)).to eq(
+        success_response
       )
     end
   end
 
   describe '.get_order' do
-    let(:json) { file_fixture('account/get_order.json') }
-
     it 'succeeds' do
-      expect(api.get_order(symbol: 'AVAXUSDT', orderId: '794968499'.to_i).keys).to match_array(
-        %i[
-          symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
-          timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
-        ]
+      expect(api.get_order(symbol: 'BTCUSDT', orderId: 1)).to eq(
+        success_response
       )
     end
   end
 
   describe '.get_open_orders' do
-    let(:json) { file_fixture('account/get_open_orders.json') }
-
     it 'succeeds' do
-      expect(api.get_open_orders(symbol: 'SOLBUSD').first.keys).to match_array(
-        %i[
-          symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
-          timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
-        ]
+      expect(api.get_open_orders(symbol: 'BTCUSDT')).to eq(
+        success_response
       )
     end
   end
 
   describe '.get_orders' do
-    let(:json) { file_fixture('account/get_orders.json') }
-
     it 'succeeds' do
-      expect(api.get_orders(symbol: 'AVAXUSDT').first.keys).to match_array(
-        %i[
-          symbol orderId orderListId clientOrderId price origQty executedQty cummulativeQuoteQty status
-          timeInForce type side stopPrice icebergQty time updateTime isWorking origQuoteOrderQty
-        ]
+      expect(api.get_orders(symbol: 'BTCUSDT')).to eq(
+        success_response
       )
     end
   end
 
   describe '.account' do
-    let(:json) { file_fixture('account/account.json') }
-
     it 'succeeds' do
-      expect(api.account.keys).to match_array(
-        %i[
-          makerCommission takerCommission buyerCommission sellerCommission canTrade
-          canWithdraw canDeposit updateTime accountType balances permissions
-        ]
+      expect(api.account).to eq(
+        success_response
       )
     end
   end
 
   describe '.my_trades' do
-    let(:json) { file_fixture('account/my_trades.json') }
-
     it 'succeeds' do
-      expect(api.my_trades(symbol: 'XRPUSDT').first.keys).to match_array(
-        %i[
-          symbol id orderId orderListId price qty quoteQty commission commissionAsset time isBuyer isMaker isBestMatch
-        ]
+      expect(api.my_trades(symbol: 'BTCUSDT', orderId: 1)).to eq(
+        success_response
       )
     end
   end

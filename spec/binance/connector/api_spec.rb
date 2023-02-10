@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Binance::Connector::Api do
-  subject(:api) { described_class.new }
+  subject(:api) { described_class.new(api_key: 'BINANCE_API_KEY', secret_key: 'BINANCE_SECRET_KEY') }
 
   describe '.url' do
     it 'succeeds' do
-      expect(api.url('/path')).to eq(
-        'https://api.binance.com/path'
+      expect(api.url('/api/v3/order')).to eq(
+        'https://api.binance.com/api/v3/order'
       )
     end
   end
@@ -16,9 +16,7 @@ RSpec.describe Binance::Connector::Api do
 
     it 'succeeds' do
       expect(api.options_unsigned(params)).to eq(
-        {
-          query: params
-        }
+        { query: params }
       )
     end
   end
@@ -26,25 +24,46 @@ RSpec.describe Binance::Connector::Api do
   describe '.options_signed' do
     before do
       allow(Time).to receive(:now).and_return(
-        Time.utc(2021, 10, 27)
+        Time.utc(2023, 1, 31)
       )
     end
 
-    let(:params) { {} }
+    context 'when params is empty' do
+      let(:params) { {} }
 
-    it 'succeeds' do
-      expect(api.options_signed(params)).to eq(
-        {
-          query: params.merge(
-            {
-              recvWindow: 5000,
-              timestamp: '1635292800000',
-              signature: '2e2a239db849bbac570ee1c25686876b6ef0c7ff0c8a3aa048a9262f2772c9c6'
-            }
-          ),
-          headers: { 'X-MBX-APIKEY': '' }
-        }
-      )
+      it 'succeeds' do
+        expect(api.options_signed(params)).to eq(
+          {
+            query: params.merge(
+              {
+                recvWindow: 5000,
+                timestamp: '1675123200000',
+                signature: 'c651982571bbd314e63ffbc7fa830e9d9fc4d96efb4d79f9dcccdc0838fe7b59'
+              }
+            ),
+            headers: { 'X-MBX-APIKEY': 'BINANCE_API_KEY' }
+          }
+        )
+      end
+    end
+
+    context 'when params is not empty' do
+      let(:params) { { symbol: 'BTCUSDT', side: 'BUY', type: 'MARKET', quantity: 0.005 } }
+
+      it 'succeeds' do
+        expect(api.options_signed(params)).to eq(
+          {
+            query: params.merge(
+              {
+                recvWindow: 5000,
+                timestamp: '1675123200000',
+                signature: '29cf072c2037a26a70948b13653cf71253333123e09aa45c5cd482f1d90db6a2'
+              }
+            ),
+            headers: { 'X-MBX-APIKEY': 'BINANCE_API_KEY' }
+          }
+        )
+      end
     end
   end
 end

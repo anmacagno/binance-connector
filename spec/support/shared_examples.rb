@@ -14,16 +14,6 @@ RSpec.shared_examples 'a contract' do |validations:|
       end
     end
 
-    validations[:integer]&.each do |key|
-      context "when integer #{key} is nil" do
-        let(:args) { { key => nil } }
-
-        it 'fails' do
-          expect(errors).to include(key => ['must be an integer'])
-        end
-      end
-    end
-
     validations[:string]&.each do |key|
       context "when string #{key} is nil" do
         let(:args) { { key => nil } }
@@ -42,12 +32,22 @@ RSpec.shared_examples 'a contract' do |validations:|
       end
     end
 
-    validations[:decimal]&.each do |key|
-      context "when decimal #{key} is nil" do
+    validations[:integer]&.each do |key|
+      context "when integer #{key} is nil" do
         let(:args) { { key => nil } }
 
         it 'fails' do
-          expect(errors).to include(key => ['must be a decimal'])
+          expect(errors).to include(key => ['must be an integer'])
+        end
+      end
+    end
+
+    validations[:float]&.each do |key|
+      context "when float #{key} is nil" do
+        let(:args) { { key => nil } }
+
+        it 'fails' do
+          expect(errors).to include(key => ['must be a float'])
         end
       end
     end

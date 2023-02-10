@@ -3,8 +3,8 @@
 RSpec.describe Binance::Connector::Contracts::KlinesContract do
   it_behaves_like 'a contract', validations: {
     required: %i[symbol interval],
-    integer: %i[limit],
     string: %i[symbol interval],
+    integer: %i[limit],
     time: %i[startTime endTime],
     format: %i[symbol],
     inclusion: %i[interval]
@@ -14,7 +14,7 @@ RSpec.describe Binance::Connector::Contracts::KlinesContract do
     subject(:result) { described_class.validate!(args) }
 
     context 'when args is valid' do
-      let(:args) { { symbol: 'ETHUSDT', interval: '1d', startTime: Time.utc(2022), endTime: Time.utc(2023) } }
+      let(:args) { { symbol: 'BTCUSDT', interval: '1d', startTime: Time.utc(2022), endTime: Time.utc(2023) } }
 
       it 'success' do
         expect(result.success?).to be true
@@ -30,7 +30,7 @@ RSpec.describe Binance::Connector::Contracts::KlinesContract do
     end
 
     context 'when args has a disallowed key' do
-      let(:args) { { symbol: 'ETHUSDT', interval: '1d', unexpected: :reality } }
+      let(:args) { { symbol: 'BTCUSDT', interval: '1d', unexpected: :reality } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
@@ -40,7 +40,7 @@ RSpec.describe Binance::Connector::Contracts::KlinesContract do
     end
 
     context 'when limit is less than 1' do
-      let(:args) { { symbol: 'ETHUSDT', interval: '1d', limit: 0 } }
+      let(:args) { { symbol: 'BTCUSDT', interval: '1d', limit: 0 } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
@@ -50,7 +50,7 @@ RSpec.describe Binance::Connector::Contracts::KlinesContract do
     end
 
     context 'when limit is greater than 1000' do
-      let(:args) { { symbol: 'ETHUSDT', interval: '1d', limit: 1001 } }
+      let(:args) { { symbol: 'BTCUSDT', interval: '1d', limit: 1001 } }
 
       it 'raises an error' do
         expect { result }.to raise_error(

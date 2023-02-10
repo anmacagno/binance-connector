@@ -3,8 +3,8 @@
 RSpec.describe Binance::Connector::Contracts::MyTradesContract do
   it_behaves_like 'a contract', validations: {
     required: %i[symbol],
-    integer: %i[orderId],
     string: %i[symbol],
+    integer: %i[orderId],
     format: %i[symbol]
   }
 
@@ -12,7 +12,7 @@ RSpec.describe Binance::Connector::Contracts::MyTradesContract do
     subject(:result) { described_class.validate!(args) }
 
     context 'when args is valid' do
-      let(:args) { { symbol: 'XRPUSDT' } }
+      let(:args) { { symbol: 'BTCUSDT', orderId: 1 } }
 
       it 'success' do
         expect(result.success?).to be true
@@ -20,7 +20,7 @@ RSpec.describe Binance::Connector::Contracts::MyTradesContract do
     end
 
     context 'when args has a disallowed key' do
-      let(:args) { { symbol: 'XRPUSDT', unexpected: :reality } }
+      let(:args) { { symbol: 'BTCUSDT', orderId: 1, unexpected: :reality } }
 
       it 'raises an error' do
         expect { result }.to raise_error(

@@ -10,7 +10,7 @@ RSpec.describe Binance::Connector::Contracts::GetOpenOrdersContract do
     subject(:result) { described_class.validate!(args) }
 
     context 'when args is valid' do
-      let(:args) { { symbol: 'SOLBUSD' } }
+      let(:args) { { symbol: 'BTCUSDT' } }
 
       it 'success' do
         expect(result.success?).to be true
@@ -18,7 +18,7 @@ RSpec.describe Binance::Connector::Contracts::GetOpenOrdersContract do
     end
 
     context 'when args has a disallowed key' do
-      let(:args) { { symbol: 'SOLBUSD', unexpected: :reality } }
+      let(:args) { { symbol: 'BTCUSDT', unexpected: :reality } }
 
       it 'raises an error' do
         expect { result }.to raise_error(
