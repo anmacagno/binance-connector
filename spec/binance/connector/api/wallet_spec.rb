@@ -5,7 +5,7 @@ RSpec.describe Binance::Connector::Api::Wallet do
 
   include_context 'with mocked http responses'
 
-  describe '.system_status' do
+  describe '#system_status' do
     it 'succeeds' do
       expect(api.system_status).to eq(
         success_response

@@ -5,7 +5,7 @@ RSpec.describe Binance::Connector::Api::Market do
 
   include_context 'with mocked http responses'
 
-  describe '.ping' do
+  describe '#ping' do
     it 'succeeds' do
       expect(api.ping).to eq(
         success_response
@@ -13,7 +13,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
   end
 
-  describe '.time' do
+  describe '#time' do
     it 'succeeds' do
       expect(api.time).to eq(
         success_response
@@ -21,7 +21,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
   end
 
-  describe '.exchange_info' do
+  describe '#exchange_info' do
     it 'succeeds' do
       expect(api.exchange_info(symbols: %w[BTCUSDT ETHUSDT])).to eq(
         success_response
@@ -29,7 +29,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
   end
 
-  describe '.klines' do
+  describe '#klines' do
     it 'succeeds' do
       expect(api.klines(symbol: 'BTCUSDT', interval: '1d', startTime: Time.utc(2022), endTime: Time.utc(2023))).to eq(
         success_response
@@ -37,7 +37,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
   end
 
-  describe '.avg_price' do
+  describe '#avg_price' do
     it 'succeeds' do
       expect(api.avg_price(symbol: 'BTCUSDT')).to eq(
         success_response
@@ -45,7 +45,7 @@ RSpec.describe Binance::Connector::Api::Market do
     end
   end
 
-  describe '.ticker_price' do
+  describe '#ticker_price' do
     it 'succeeds' do
       expect(api.ticker_price(symbols: %w[BTCUSDT ETHUSDT])).to eq(
         success_response

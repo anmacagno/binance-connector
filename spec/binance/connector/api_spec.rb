@@ -3,7 +3,7 @@
 RSpec.describe Binance::Connector::Api do
   subject(:api) { described_class.new(api_key: 'BINANCE_API_KEY', secret_key: 'BINANCE_SECRET_KEY') }
 
-  describe '.url' do
+  describe '#url' do
     it 'succeeds' do
       expect(api.url('/api/v3/order')).to eq(
         'https://api.binance.com/api/v3/order'
@@ -11,7 +11,7 @@ RSpec.describe Binance::Connector::Api do
     end
   end
 
-  describe '.options_unsigned' do
+  describe '#options_unsigned' do
     let(:params) { {} }
 
     it 'succeeds' do
@@ -21,7 +21,7 @@ RSpec.describe Binance::Connector::Api do
     end
   end
 
-  describe '.options_signed' do
+  describe '#options_signed' do
     before do
       allow(Time).to receive(:now).and_return(
         Time.utc(2023, 1, 31)
