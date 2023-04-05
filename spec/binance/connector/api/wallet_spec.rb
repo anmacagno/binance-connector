@@ -12,4 +12,12 @@ RSpec.describe Binance::Connector::Api::Wallet do
       )
     end
   end
+
+  describe '#get_user_asset' do
+    it 'succeeds' do
+      expect(api.get_user_asset(asset: 'BTC')).to eq(
+        success_response
+      )
+    end
+  end
 end
