@@ -3,6 +3,9 @@
 require 'simplecov'
 SimpleCov.start
 
+require 'webmock/rspec'
+WebMock.disable_net_connect!
+
 require 'binance/connector'
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
