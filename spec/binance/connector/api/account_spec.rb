@@ -3,7 +3,7 @@
 RSpec.describe Binance::Connector::Api::Account do
   subject(:api) { Binance::Connector::Api.new }
 
-  include_context 'with mocked http responses'
+  include_context 'with stubbed http requests'
 
   describe '#new_order_test' do
     it 'succeeds' do

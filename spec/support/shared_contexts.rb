@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-RSpec.shared_context 'with mocked http responses' do
-  let(:json_response) { '{}' }
-  let(:success_response) { JSON.parse(json_response, symbolize_names: true) }
+RSpec.shared_context 'with stubbed http requests' do
+  let(:success_response) { {} }
 
   before do
-    allow(HTTParty).to receive_messages(get: json_response, post: json_response, delete: json_response)
+    stub_request(:any, ->(_uri) { true }).to_return(
+      body: '{}',
+      headers: { content_type: 'application/json' },
+      status: 200
+    )
   end
 end

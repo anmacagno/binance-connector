@@ -21,5 +21,19 @@ module Binance
     class Error < StandardError; end
 
     class ContractError < Error; end
+
+    class RequestError < Error
+      attr_reader :code, :message
+
+      def initialize(code, message)
+        super()
+        @code = code
+        @message = message
+      end
+
+      def to_s
+        "#{message} (#{code})"
+      end
+    end
   end
 end
